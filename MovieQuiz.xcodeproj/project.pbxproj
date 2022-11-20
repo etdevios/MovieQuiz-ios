@@ -16,6 +16,8 @@
 		AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EE5DD284D7887003966EF /* UIColor+Extensions.swift */; };
 		AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD77F5732857F8810062FB14 /* Date+Extensions.swift */; };
 		AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7AFA542836189F00399704 /* Array+Extensions.swift */; };
+		F6C57DD1292A8AF7008801D4 /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6AD5B1D292027EE0063E6C3 /* YS Display-Bold.ttf */; };
+		F6C57DD2292A8AFB008801D4 /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6AD5B1E292027EF0063E6C3 /* YS Display-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,11 +59,10 @@
 		8F4738332848DE46005DF65E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F6C57DD3292A8B39008801D4 /* MovieQuizFonts */,
 				AD1ABABC2831907F00B3E448 /* LaunchScreen.storyboard */,
 				AD1ABABA2831907F00B3E448 /* Assets.xcassets */,
 				AD1ABABF2831907F00B3E448 /* Info.plist */,
-				F6AD5B1D292027EE0063E6C3 /* YS Display-Bold.ttf */,
-				F6AD5B1E292027EF0063E6C3 /* YS Display-Medium.ttf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -118,6 +119,15 @@
 				AD77F5732857F8810062FB14 /* Date+Extensions.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		F6C57DD3292A8B39008801D4 /* MovieQuizFonts */ = {
+			isa = PBXGroup;
+			children = (
+				F6AD5B1D292027EE0063E6C3 /* YS Display-Bold.ttf */,
+				F6AD5B1E292027EF0063E6C3 /* YS Display-Medium.ttf */,
+			);
+			path = MovieQuizFonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +193,8 @@
 				AD1ABABE2831907F00B3E448 /* LaunchScreen.storyboard in Resources */,
 				AD1ABABB2831907F00B3E448 /* Assets.xcassets in Resources */,
 				AD1ABAB92831907B00B3E448 /* Main.storyboard in Resources */,
+				F6C57DD1292A8AF7008801D4 /* YS Display-Bold.ttf in Resources */,
+				F6C57DD2292A8AFB008801D4 /* YS Display-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
