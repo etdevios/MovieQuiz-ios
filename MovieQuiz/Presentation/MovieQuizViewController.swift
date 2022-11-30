@@ -15,6 +15,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenterProtocol? = nil
+    private var statisticService = StatisticServiceImplementation()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -93,9 +94,16 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            let text = correctAnswers == questionsAmount ?
-            "Поздравляем, Вы ответили на 10 из 10!" :
-            "Вы ответили на \(correctAnswers) из 10, попробуйте еще раз!"
+            statisticService.store(correct: correctAnswers, total: questionsAmount)
+            let totalAccuracy = statisticService.totalAccuracy
+            let gamesCount = statisticService.gamesCount
+            let bestGames = statisticService.bestGame
+            let text = """
+Ваш результат \(correctAnswers)/\(questionsAmount)
+Количество сыгранных квизов: \(gamesCount)
+Рекорд: \(bestGames.correct)/\(bestGames.total) (\(bestGames.date.dateTimeString))
+Средняя точность: \(String(format: "%.2f", totalAccuracy))%
+"""
             let viewModel = QuizResultsViewModel(
                 title: "Этот раунд окончен!",
                 text: text,
