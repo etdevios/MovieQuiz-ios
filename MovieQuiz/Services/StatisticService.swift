@@ -6,6 +6,7 @@ protocol StatisticService {
     var bestGame: GameRecord { get }
     func store(correct count: Int, total amount: Int)
 }
+
 final class StatisticServiceImplementation: StatisticService {
     
     private let userDefaults = UserDefaults.standard
@@ -14,58 +15,33 @@ final class StatisticServiceImplementation: StatisticService {
         case correct, total, bestGame, gamesCount
     }
     
-    
     private(set) var totalAccuracy: Double {
         get {
-            guard let data = userDefaults.data(forKey: Keys.total.rawValue),
-                  let record = try? JSONDecoder().decode(Double.self, from: data) else {
-                return 0
-            }
-            
-            return record
+            let double = userDefaults.double(forKey: Keys.total.rawValue)
+            return double
         }
         set {
-            guard let data = try? JSONEncoder().encode(newValue) else {
-                print("Невозможно сохранить результат")
-                return
-            }
-            userDefaults.set(data, forKey: Keys.total.rawValue)
+            userDefaults.set(newValue, forKey: Keys.total.rawValue)
         }
     }
     
     private(set) var gamesCount: Int {
         get {
-            guard let data = userDefaults.data(forKey: Keys.gamesCount.rawValue),
-                  let record = try? JSONDecoder().decode(Int.self, from: data) else {
-                return 0
-            }
-            
-            return record
+            let integer = userDefaults.integer(forKey: Keys.gamesCount.rawValue)
+            return integer
         }
         set {
-            guard let data = try? JSONEncoder().encode(newValue) else {
-                print("Невозможно сохранить результат")
-                return
-            }
-            userDefaults.set(data, forKey: Keys.gamesCount.rawValue)
+            userDefaults.set(newValue, forKey: Keys.gamesCount.rawValue)
         }
     }
     
     private(set) var correct: Int {
         get {
-            guard let data = userDefaults.data(forKey: Keys.correct.rawValue),
-                  let record = try? JSONDecoder().decode(Int.self, from: data) else {
-                return 0
-            }
-            
-            return record
+            let integer = userDefaults.integer(forKey: Keys.correct.rawValue)
+            return integer
         }
         set {
-            guard let data = try? JSONEncoder().encode(newValue) else {
-                print("Невозможно сохранить результат")
-                return
-            }
-            userDefaults.set(data, forKey: Keys.correct.rawValue)
+            userDefaults.set(newValue, forKey: Keys.correct.rawValue)
         }
     }
     
@@ -75,7 +51,6 @@ final class StatisticServiceImplementation: StatisticService {
                   let record = try? JSONDecoder().decode(GameRecord.self, from: data) else {
                 return .init(correct: 0, total: 0, date: Date())
             }
-            
             return record
         }
         

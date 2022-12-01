@@ -5,8 +5,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var counterLabel: UILabel!
-    @IBOutlet weak var noButton: UIButton!
-    @IBOutlet weak var yesButton: UIButton!
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var yesButton: UIButton!
     
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
@@ -14,8 +14,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
-    private var alertPresenter: AlertPresenterProtocol? = nil
-    private var statisticService = StatisticServiceImplementation()
+    private var alertPresenter: AlertPresenterProtocol?
+    private var statisticService: StatisticService?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -23,6 +23,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         questionFactory = QuestionFactory(delegate: self)
         alertPresenter = AlertPresenter(delegate: self)
         questionFactory?.requestNextQuestion()
+        statisticService = StatisticServiceImplementation()
     }
     
     // MARK: - QuestionFactoryDelegate
@@ -94,6 +95,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
+            guard let statisticService = statisticService else { return }
             statisticService.store(correct: correctAnswers, total: questionsAmount)
             let totalAccuracy = statisticService.totalAccuracy
             let gamesCount = statisticService.gamesCount
@@ -104,6 +106,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
 Рекорд: \(bestGames.correct)/\(bestGames.total) (\(bestGames.date.dateTimeString))
 Средняя точность: \(String(format: "%.2f", totalAccuracy))%
 """
+            // Если строки сдвинуть ровно в столбец в let text выше, то на алерте они сместятся, из-за того что будут считаться табы(пробелы).
+            
             let viewModel = QuizResultsViewModel(
                 title: "Этот раунд окончен!",
                 text: text,
