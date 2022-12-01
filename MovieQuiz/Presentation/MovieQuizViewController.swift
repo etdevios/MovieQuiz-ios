@@ -100,7 +100,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 Рекорд: \(bestGames.correct)/\(bestGames.total) (\(bestGames.date.dateTimeString))
 Средняя точность: \(String(format: "%.2f", totalAccuracy))%
 """
-            // Если строки сдвинуть ровно в столбец в let text выше, то на алерте они сместятся, из-за того что будут считаться табы(пробелы).
             
             let viewModel = QuizResultsViewModel(
                 title: "Этот раунд окончен!",
