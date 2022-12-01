@@ -1,11 +1,10 @@
 import UIKit
 
-struct AlertPresenter: AlertPresenterProtocol {
+struct AlertPresenter {
     
-    weak var delegate: AlertPresenterDelegate?
+    weak var present: UIViewController?
     
     func show(quiz alert: QuizResultsViewModel, completion: ((UIAlertAction) -> Void)? = nil) {
-        
         var result = convert(model: alert)
         result.completion = completion
         
@@ -22,7 +21,7 @@ struct AlertPresenter: AlertPresenterProtocol {
         )
         
         alert.addAction(action)
-        delegate?.didShow(alert: alert)
+        present?.present(alert, animated: true)
     }
     
     private func convert(model: QuizResultsViewModel) -> AlertModel {

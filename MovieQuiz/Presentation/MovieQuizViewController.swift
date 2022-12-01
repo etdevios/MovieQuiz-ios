@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, AlertPresenterDelegate {
+final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
@@ -14,14 +14,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
-    private var alertPresenter: AlertPresenterProtocol?
+    private var alertPresenter: AlertPresenter?
     private var statisticService: StatisticService?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         questionFactory = QuestionFactory(delegate: self)
-        alertPresenter = AlertPresenter(delegate: self)
+        alertPresenter = AlertPresenter(present: self)
         questionFactory?.requestNextQuestion()
         statisticService = StatisticServiceImplementation()
     }
@@ -38,12 +38,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
-    }
-    
-    // MARK: - AlertPresenterDelegate
-    
-    func didShow(alert: UIAlertController) {
-        self.present(alert, animated: true)
     }
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
