@@ -4,34 +4,22 @@ struct AlertPresenter {
     
     weak var present: UIViewController?
     
-    func show(quiz alert: QuizResultsViewModel, completion: ((UIAlertAction) -> Void)? = nil) {
-        var result = convert(model: alert)
-        result.completion = completion
+    func show(_ model: AlertModel, completion: ((UIAlertAction) -> Void)? = nil) {
         
         let alert = UIAlertController(
-            title: result.title,
-            message: result.message,
+            title: model.title,
+            message: model.message,
             preferredStyle: .alert
         )
         
         let action = UIAlertAction(
-            title: result.buttonText,
+            title: model.buttonText,
             style: .default,
-            handler: result.completion
+            handler: completion
         )
         
         alert.addAction(action)
         present?.present(alert, animated: true)
     }
-    
-    private func convert(model: QuizResultsViewModel) -> AlertModel {
-        let alertModel = AlertModel(
-            title: model.title,
-            message: model.text,
-            buttonText: model.buttonText
-        )
-        return alertModel
-    }
-    
     
 }

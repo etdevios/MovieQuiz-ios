@@ -4,7 +4,7 @@ protocol StatisticService {
     var totalAccuracy: Double { get }
     var gamesCount: Int { get }
     var bestGame: GameRecord { get }
-    func store(correct count: Int, total amount: Int)
+    func store(correct count: Int, total amount: Int) -> String
 }
 
 final class StatisticServiceImplementation: StatisticService {
@@ -63,12 +63,19 @@ final class StatisticServiceImplementation: StatisticService {
         }
     }
     
-    func store(correct count: Int, total amount: Int) {
+    func store(correct count: Int, total amount: Int) -> String {
         if bestGame.correct < count {
             bestGame = GameRecord(correct: count, total: amount, date: Date())
         }
         gamesCount += 1
         correct += count
         totalAccuracy = Double(correct) / Double(gamesCount) * 10
+        
+        return """
+        Ваш результат: \(count) / \(amount)
+        Количество сыграных квизов: \(gamesCount)
+        Рекорд: \(bestGame.correct)/\(bestGame.total) (\(bestGame.date.dateTimeString))
+        Средняя точность: \(String(format: "%.2f", totalAccuracy))%
+        """
     }
 }
