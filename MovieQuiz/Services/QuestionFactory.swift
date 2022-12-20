@@ -17,8 +17,8 @@ class QuestionFactory: QuestionFactoryProtocol {
                 guard let self = self else { return }
                 switch result {
                 case .success(let mostPopularMovies):
-                        self.movies = mostPopularMovies.items
-                        self.delegate?.didLoadDataFromServer()
+                    self.movies = mostPopularMovies.items
+                    self.delegate?.didLoadDataFromServer()
                 case .failure(let error):
                     self.delegate?.didFailToLoadData(with: error)
                 }
@@ -42,8 +42,8 @@ class QuestionFactory: QuestionFactoryProtocol {
                     let error = error
                     self?.delegate?.didFailToLoadData(with:error)
                     print("Failed to load image")
-                    return
                 }
+                return
             }
             
             let rating = Float(movie.rating) ?? 0

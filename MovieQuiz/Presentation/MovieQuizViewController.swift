@@ -20,18 +20,18 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         alertPresenter = AlertPresenter(present: self)
-        questionFactory?.requestNextQuestion()
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         statisticService = StatisticServiceImplementation()
         
-        questionFactory?.loadData()
         activityIndicator.startAnimating()
+        questionFactory?.loadData()
     }
     
     // MARK: - QuestionFactoryDelegate
     
     func didRecieveNextQuestion(question: QuizQuestion?) {
+        activityIndicator.stopAnimating()
         guard let question = question else { return }
         currentQuestion = question
         
@@ -42,7 +42,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     func didLoadDataFromServer() {
-        activityIndicator.stopAnimating()
         questionFactory?.requestNextQuestion()
     }
     
