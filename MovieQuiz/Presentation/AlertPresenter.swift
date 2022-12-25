@@ -19,6 +19,7 @@ struct AlertPresenter {
         )
         
         alert.addAction(action)
+        alert.view.accessibilityIdentifier = "Game results"
         present?.present(alert, animated: true)
     }
     
