@@ -35,6 +35,7 @@
 		F6DA2F8B2939236E00192731 /* QuestionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA2F8A2939236E00192731 /* QuestionFactory.swift */; };
 		F6DA2F8F293928C300192731 /* QuestionFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA2F8E293928C300192731 /* QuestionFactoryProtocol.swift */; };
 		F6DA2F91293928F700192731 /* QuestionFactoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA2F90293928F700192731 /* QuestionFactoryDelegate.swift */; };
+		F6F8112F295AB25700649844 /* MovieQuizPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F8112E295AB25700649844 /* MovieQuizPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		F6DA2F8A2939236E00192731 /* QuestionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionFactory.swift; sourceTree = "<group>"; };
 		F6DA2F8E293928C300192731 /* QuestionFactoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionFactoryProtocol.swift; sourceTree = "<group>"; };
 		F6DA2F90293928F700192731 /* QuestionFactoryDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionFactoryDelegate.swift; sourceTree = "<group>"; };
+		F6F8112E295AB25700649844 /* MovieQuizPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				F60DB18F29337B96003EC9C6 /* AlertPresenter.swift */,
 				AD1ABAB52831907B00B3E448 /* MovieQuizViewController.swift */,
 				AD1ABAB72831907B00B3E448 /* Main.storyboard */,
+				F6F8112E295AB25700649844 /* MovieQuizPresenter.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6F8112F295AB25700649844 /* MovieQuizPresenter.swift in Sources */,
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
 				F694E0C52936C76300E35EF2 /* GameRecord.swift in Sources */,
 				F60DB19029337B96003EC9C6 /* AlertPresenter.swift in Sources */,
