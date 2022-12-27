@@ -1,8 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol, AlertDelegate {
-    
-    
+final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol{
     
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
@@ -12,16 +10,18 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private var presenter: MovieQuizPresenter!
+    private var alertPresenter: AlertPresenter?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = MovieQuizPresenter(viewController: self)
-        presenter.alertPresenter = AlertPresenter(delegate: self)
+        alertPresenter = AlertPresenter(alertPresent: self)
     }
     
-    func presentAlert(_ alert: UIAlertController, animated: Bool) {
-        present(alert, animated: animated)
+    // MARK: - Alert Present
+    func presentAlert(_ alert: AlertModel) {
+        alertPresenter?.showAlert(alert)
     }
     
     // MARK: - Actions
@@ -37,7 +37,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     
     // MARK: - Private functions
     func show(quiz step: QuizStepViewModel) {
-        // заполняем нашу картинку, текст и счётчик данными
         imageView.image = step.image
         textLabel.text = step.question
         counterLabel.text = step.questionNumber

@@ -1,14 +1,10 @@
 import UIKit
 
-struct AlertPresenter: AlertPresenterProtocol {
+struct AlertPresenter {
     
-    private weak var delegate: AlertDelegate?
+    private(set) weak var alertPresent: UIViewController?
     
-    init(delegate: AlertDelegate? = nil) {
-        self.delegate = delegate
-    }
-    
-    func showAlert(_ model: AlertModel, completion: ((UIAlertAction) -> Void)? = nil) {
+    func showAlert(_ model: AlertModel) {
         
         let alert = UIAlertController(
             title: model.title,
@@ -19,12 +15,12 @@ struct AlertPresenter: AlertPresenterProtocol {
         let action = UIAlertAction(
             title: model.buttonText,
             style: .default,
-            handler: completion
+            handler: model.completion
         )
         
         alert.addAction(action)
         alert.view.accessibilityIdentifier = "Game results"
-        delegate?.presentAlert(alert, animated: true)
+        alertPresent?.present(alert, animated: true)
     }
     
 }

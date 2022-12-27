@@ -1,6 +1,9 @@
 import Foundation
 
 protocol MovieQuizViewControllerProtocol: AnyObject {
+    
+    func presentAlert(_ alert: AlertModel)
+    
     func show(quiz step: QuizStepViewModel)
     
     func hideBorder()

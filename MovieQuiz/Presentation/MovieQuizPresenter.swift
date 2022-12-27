@@ -1,11 +1,9 @@
 import UIKit
 
-final class MovieQuizPresenter: QuestionFactoryDelegate {
-    
-    var alertPresenter: AlertPresenterProtocol?
+final class MovieQuizPresenter {
     
     private weak var viewController: MovieQuizViewControllerProtocol?
-    private let statisticService: StatisticService!
+    private let statisticService: StatisticService?
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     
@@ -16,36 +14,11 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
         
-        alertPresenter = AlertPresenter()
         statisticService = StatisticServiceImplementation()
         
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         questionFactory?.loadData()
         viewController.showLoadingIndicator()
-        
-    }
-    
-    // MARK: - QuestionFactoryDelegate
-    
-    func didLoadDataFromServer() {
-        questionFactory?.requestNextQuestion()
-    }
-    
-    func didFailToLoadData(with error: Error) {
-        let message = error.localizedDescription
-        showNetworkError(message: message)
-    }
-    
-    func didRecieveNextQuestion(question: QuizQuestion?) {
-        guard let question = question else { return }
-        viewController?.hideLoadIndicator()
-        
-        currentQuestion = question
-        let viewModel = convert(model: question)
-        DispatchQueue.main.async { [weak self] in
-            self?.viewController?.show(quiz: viewModel)
-            
-        }
     }
     
     func isLastQuestion() -> Bool {
@@ -92,11 +65,12 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
                 title: "Этот раунд окончен!",
                 message: text ,
                 buttonText: "Сыграть еще раз"
-            )
-            alertPresenter?.showAlert(viewModel) { [weak self] _ in
+            ) { [weak self] _ in
                 guard let self = self else { return }
                 self.restartGame()
             }
+            
+            viewController?.presentAlert(viewModel)
         } else {
             switchToNextQuestion()
             questionFactory?.requestNextQuestion()
@@ -134,14 +108,40 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             title: "Ошибка",
             message: message,
             buttonText: "Попробовать еще раз"
-        )
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.restartGame()
+        }
         
         resetQuestionIndex()
         restartGame()
         
-        alertPresenter?.showAlert(model) { [weak self] _ in
-            guard let self = self else { return }
-            self.restartGame()
+        viewController?.presentAlert(model)
+    }
+}
+
+extension MovieQuizPresenter: QuestionFactoryDelegate {
+    
+    // MARK: - QuestionFactoryDelegate
+    
+    func didLoadDataFromServer() {
+        questionFactory?.requestNextQuestion()
+    }
+    
+    func didFailToLoadData(with error: Error) {
+        let message = error.localizedDescription
+        showNetworkError(message: message)
+    }
+    
+    func didRecieveNextQuestion(question: QuizQuestion?) {
+        guard let question = question else { return }
+        viewController?.hideLoadIndicator()
+        
+        currentQuestion = question
+        let viewModel = convert(model: question)
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.show(quiz: viewModel)
+            
         }
     }
 }
