@@ -1,14 +1,11 @@
-//
-//  MovieQuizPresenter.swift
-//  MovieQuiz
-//
-//  Created by Eduard Tokarev on 27.12.2022.
-//
-
 import UIKit
 
 final class MovieQuizPresenter {
+    
     let questionsAmount: Int = 10
+    var currentQuestion: QuizQuestion?
+    weak var viewController: MovieQuizViewController?
+    
     private var currentQuestionIndex: Int = 0
     
     func isLastQuestion() -> Bool {
@@ -16,7 +13,7 @@ final class MovieQuizPresenter {
     }
     
     func resetQuestionIndex() {
-     currentQuestionIndex = 0
+        currentQuestionIndex = 0
     }
     
     func switchToNextQuestion() {
@@ -29,6 +26,18 @@ final class MovieQuizPresenter {
             question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
         )
+    }
+    
+    func yesButtonClicked() {
+        guard let currentQuestion = currentQuestion else { return }
+        let givenAnswer = true
+        viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    }
+    
+    func noButtonClicked() {
+        guard let currentQuestion = currentQuestion else { return }
+        let givenAnswer = false
+        viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
     
     
