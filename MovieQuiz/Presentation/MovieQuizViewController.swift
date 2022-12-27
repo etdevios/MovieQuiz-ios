@@ -1,6 +1,8 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController {
+final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol, AlertDelegate {
+    
+    
     
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
@@ -15,6 +17,11 @@ final class MovieQuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = MovieQuizPresenter(viewController: self)
+        presenter.alertPresenter = AlertPresenter(delegate: self)
+    }
+    
+    func presentAlert(_ alert: UIAlertController, animated: Bool) {
+        present(alert, animated: animated)
     }
     
     // MARK: - Actions

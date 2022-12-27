@@ -2,8 +2,9 @@ import UIKit
 
 final class MovieQuizPresenter: QuestionFactoryDelegate {
     
-    private weak var viewController: MovieQuizViewController?
-    private var alertPresenter: AlertPresenter?
+    var alertPresenter: AlertPresenterProtocol?
+    
+    private weak var viewController: MovieQuizViewControllerProtocol?
     private let statisticService: StatisticService!
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
@@ -12,10 +13,10 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     private var correctAnswers = 0
     private var currentQuestionIndex: Int = 0
     
-    init(viewController: MovieQuizViewController) {
+    init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
-        self.alertPresenter = AlertPresenter(present: viewController)
         
+        alertPresenter = AlertPresenter()
         statisticService = StatisticServiceImplementation()
         
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
@@ -92,7 +93,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
                 message: text ,
                 buttonText: "Сыграть еще раз"
             )
-            alertPresenter?.show(viewModel) { [weak self] _ in
+            alertPresenter?.showAlert(viewModel) { [weak self] _ in
                 guard let self = self else { return }
                 self.restartGame()
             }
@@ -133,14 +134,14 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             title: "Ошибка",
             message: message,
             buttonText: "Попробовать еще раз"
-        ) { [weak self] _ in
-            guard let self = self else { return }
-            self.restartGame()
-        }
+        )
         
         resetQuestionIndex()
         restartGame()
         
-        alertPresenter?.show(model)
+        alertPresenter?.showAlert(model) { [weak self] _ in
+            guard let self = self else { return }
+            self.restartGame()
+        }
     }
 }
