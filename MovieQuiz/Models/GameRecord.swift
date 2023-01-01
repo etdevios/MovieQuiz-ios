@@ -5,5 +5,3 @@ struct GameRecord: Codable {
     var total: Int
     var date: Date
 } 
-
-

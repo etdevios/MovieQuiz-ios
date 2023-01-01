@@ -2,9 +2,9 @@ import UIKit
 
 struct AlertPresenter {
     
-    weak var present: UIViewController?
+    private(set) weak var alertPresent: UIViewController?
     
-    func show(_ model: AlertModel, completion: ((UIAlertAction) -> Void)? = nil) {
+    func showAlert(_ model: AlertModel) {
         
         let alert = UIAlertController(
             title: model.title,
@@ -15,11 +15,12 @@ struct AlertPresenter {
         let action = UIAlertAction(
             title: model.buttonText,
             style: .default,
-            handler: completion
+            handler: model.completion
         )
         
         alert.addAction(action)
-        present?.present(alert, animated: true)
+        alert.view.accessibilityIdentifier = "Game results"
+        alertPresent?.present(alert, animated: true)
     }
     
 }

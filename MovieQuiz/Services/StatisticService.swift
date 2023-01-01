@@ -17,8 +17,7 @@ final class StatisticServiceImplementation: StatisticService {
     
     private(set) var totalAccuracy: Double {
         get {
-            let double = userDefaults.double(forKey: Keys.total.rawValue)
-            return double
+            userDefaults.double(forKey: Keys.total.rawValue)
         }
         set {
             userDefaults.set(newValue, forKey: Keys.total.rawValue)
@@ -27,18 +26,16 @@ final class StatisticServiceImplementation: StatisticService {
     
     private(set) var gamesCount: Int {
         get {
-            let integer = userDefaults.integer(forKey: Keys.gamesCount.rawValue)
-            return integer
+            userDefaults.integer(forKey: Keys.gamesCount.rawValue)
         }
         set {
             userDefaults.set(newValue, forKey: Keys.gamesCount.rawValue)
         }
     }
     
-    private(set) var correct: Int {
+    private var correct: Int {
         get {
-            let integer = userDefaults.integer(forKey: Keys.correct.rawValue)
-            return integer
+            userDefaults.integer(forKey: Keys.correct.rawValue)
         }
         set {
             userDefaults.set(newValue, forKey: Keys.correct.rawValue)
